@@ -33,7 +33,7 @@ class _BodyContaState extends State<BodyConta> {
               width: 100,
               height: 100,
               image: NetworkImage(
-                  'https://scontent-gru1-2.xx.fbcdn.net/v/t1.6435-9/89580856_3522238027847369_1010792957948723200_n.jpg?_nc_cat=103&ccb=1-5&_nc_sid=174925&_nc_eui2=AeEKmBQqX8aKQ7XU9x0BU68MUx_aRl33gxJTH9pGXfeDEpE7f4bwnLvi9GhtPVHvgWBgfkjMRvSzBEJUSzG1fB5b&_nc_ohc=ipWgYl4mFQYAX9RZbyP&_nc_ht=scontent-gru1-2.xx&oh=00_AT_eL4aAO2a0gJgBDS82GC-cIUJpXwDLqp_mB5oWcRxOkg&oe=627FC24D'),
+                  'http://192.168.0.100/api-of/jonatas.jpg'),
             ),
           ),
         ),

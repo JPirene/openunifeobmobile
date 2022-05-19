@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:openfeob/tela_login.dart';
+// import 'package:openunifeobmobile/view/tela_login.dart';
 
 class TelaCriarCurso extends StatefulWidget {
   const TelaCriarCurso({Key? key}) : super(key: key);
@@ -159,11 +159,11 @@ class _TelaCriarCursoState extends State<TelaCriarCurso> {
                 SizedBox(height: 30, width: 10),
                 ElevatedButton(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const TelaLogin()),
-                      );
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //       builder: (context) => const TelaLogin()),
+                      // );
                     },
                     style: ButtonStyle(
                       backgroundColor:
