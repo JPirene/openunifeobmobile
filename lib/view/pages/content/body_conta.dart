@@ -1,8 +1,11 @@
-import 'dart:ui';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:openunifeobmobile/view/pages/tela_login.dart';
+
+import 'package:http/http.dart' as http;
+import '../../../data/Usuario.dart';
 
 class BodyConta extends StatefulWidget {
   const BodyConta({Key? key}) : super(key: key);
@@ -22,9 +25,51 @@ class _BodyContaState extends State<BodyConta> {
     color: Colors.white,
   );
 
+  dynamic jsonResponse;
+
   @override
   Widget build(BuildContext context) {
-    return Container(
+    final usuario = ModalRoute.of(context)!.settings.arguments as Usuario;
+    Uri url = Uri.parse('http://192.168.0.100/api-of/usuario/'+usuario.idUsuario);
+    getAccountDetails(context, url);
+    return FutureBuilder(
+      future: http.get(url),
+      builder: (context, snapshot){
+          if(snapshot.connectionState == ConnectionState.done){
+            return Column(
+              children: [
+                showAccountDetails(context),
+              ],
+            ); 
+          } else{
+            return Text("Carregando"); 
+          }
+      }  
+      );
+  }
+
+
+  void getAccountDetails(BuildContext context, url) async
+  {
+    http.Response response = await http.get(url);
+    
+
+    if (response.statusCode == 200) {
+      jsonResponse = jsonDecode(response.body);
+      if (jsonResponse != false) {
+        print(jsonResponse["nome_usuario"]);
+      } else {
+        print("Não Há Dados Disponiveis");
+      }
+    } else {
+      print('Request failed with status: ${response.statusCode}.');
+    }
+    return; 
+  }
+
+  showAccountDetails(BuildContext context)
+ {
+   return Container(
       child: Column(children: [
         Center(
           child: ClipRRect(
@@ -38,14 +83,14 @@ class _BodyContaState extends State<BodyConta> {
           ),
         ),
         Text(
-          "Jefferson Ventura",
+          jsonResponse["nome_usuario"] + " " +jsonResponse["sobrenome_usuario"],
           style: nameStyle,
         ),
         Divider(
           height: 10,
         ),
         Text(
-          "ventura@sou.unifeob.edu.br",
+          jsonResponse["email_usuario"],
           style: optionStyle,
         ),
         Divider(
@@ -55,7 +100,7 @@ class _BodyContaState extends State<BodyConta> {
           width: MediaQuery.of(context).size.width * 0.8,
           height: 100,
           child: Text(
-            "Olá sou Jefferson Ventura e faço ADS, se liga nos meus cursos pra adquirir um pouco do conhecimento que aprendi na feob!",
+            "Olá sou " + jsonResponse["nome_usuario"] +  " e faço ADS, se liga nos meus cursos pra adquirir um pouco do conhecimento que aprendi na feob!",
             style: optionStyle,
           ),
         ),
@@ -63,7 +108,7 @@ class _BodyContaState extends State<BodyConta> {
           height: 10,
         ),
         Text(
-          "Muzambinho, MG",
+          jsonResponse["cidade"] + ", " + jsonResponse["estado"],
           style: optionStyle,
         ),
         Divider(
@@ -77,35 +122,35 @@ class _BodyContaState extends State<BodyConta> {
           "Seus cursos publicados",
           style: optionStyle,
         ),
-        CarouselSlider(
-          options: CarouselOptions(height: 200.0),
-          items: [1, 2, 3, 4, 5].map((i) {
-            return Builder(
-              builder: (BuildContext context) {
-                return Container(
-                    width: MediaQuery.of(context).size.width,
-                    margin:
-                        EdgeInsets.symmetric(horizontal: 5.0, vertical: 5.0),
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 5.0, vertical: 5.0),
-                    decoration: BoxDecoration(
-                        color: Colors.blue[800],
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(20),
-                            topRight: Radius.circular(20),
-                            bottomLeft: Radius.circular(20),
-                            bottomRight: Radius.circular(20))),
-                    child: Text(
-                      'Curso $i enviado',
-                      style: TextStyle(
-                        fontSize: 16.0,
-                        color: Colors.white,
-                      ),
-                    ));
-              },
-            );
-          }).toList(),
-        ),
+        // CarouselSlider(
+        //   options: CarouselOptions(height: 200.0),
+        //   items: [1, 2, 3, 4, 5].map((i) {
+        //     return Builder(
+        //       builder: (BuildContext context) {
+        //         return Container(
+        //             width: MediaQuery.of(context).size.width,
+        //             margin:
+        //                 EdgeInsets.symmetric(horizontal: 5.0, vertical: 5.0),
+        //             padding:
+        //                 EdgeInsets.symmetric(horizontal: 5.0, vertical: 5.0),
+        //             decoration: BoxDecoration(
+        //                 color: Colors.blue[800],
+        //                 borderRadius: BorderRadius.only(
+        //                     topLeft: Radius.circular(20),
+        //                     topRight: Radius.circular(20),
+        //                     bottomLeft: Radius.circular(20),
+        //                     bottomRight: Radius.circular(20))),
+        //             child: Text(
+        //               'Curso $i enviado',
+        //               style: TextStyle(
+        //                 fontSize: 16.0,
+        //                 color: Colors.white,
+        //               ),
+        //             ));
+        //       },
+        //     );
+        //   }).toList(),
+        // ),
         ElevatedButton(
             onPressed: () async {
               Navigator.push(
@@ -121,5 +166,5 @@ class _BodyContaState extends State<BodyConta> {
             child: Text("Sair"))
       ]),
     );
-  }
+ }  
 }

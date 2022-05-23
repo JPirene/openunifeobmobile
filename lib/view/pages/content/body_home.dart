@@ -5,8 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import '../../../data/Usuario.dart';
 import 'package:http/http.dart' as http;
-
-import '../tela_play.dart';
+import 'tela_play.dart'; 
 
 class BodyHome extends StatefulWidget {
   const BodyHome({Key? key}) : super(key: key);
@@ -61,10 +60,10 @@ class _BodyHomeState extends State<BodyHome> {
   @override
   Widget build(BuildContext context) {
     final usuario = ModalRoute.of(context)!.settings.arguments as Usuario;
+    getLessons();
     return FutureBuilder(
         future: http.get(url),
         builder: (context, snapshot) {
-          getLessons();
           if (snapshot.connectionState == ConnectionState.done) {
             return Column(
               children: [

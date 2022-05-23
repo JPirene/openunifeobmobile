@@ -24,8 +24,6 @@ int _selectedIndex = 0;
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white);
   static const List<Widget> _widgetOptions = <Widget>[
     BodyHome(),
-    BodyAprendizado(),
-    BodyEnviar(),
     BodyConta(), 
   ];
 
@@ -49,16 +47,8 @@ int _selectedIndex = 0;
         type: BottomNavigationBarType.fixed, //Ter mais 3 itens na Navigation Bar
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.search), 
-            label: 'Pesquisar',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.book),
-            label: 'Aprendizado',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.upload),
-            label: 'Enviar',
+            icon: Icon(Icons.book), 
+            label: 'Aulas',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
